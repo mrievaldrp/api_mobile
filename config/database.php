@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => 'db_warga',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,14 @@ return [
     */
 
     'connections' => [
+        'db_warga' => [
+                'driver'    => 'mysql',
+                'host'      => '127.0.0.1',
+                'port'      =>  3306,
+                'database'  => 'db_datawarga',
+                'username'  => 'root',
+                'password'  => '',
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
