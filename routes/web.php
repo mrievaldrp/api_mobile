@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,18 +18,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::namespace('App\Http\Controllers')->group(function(){
+Route::namespace('App\Http\Controllers')->middleware('cek.apikey')->group(function(){
 
     Route::get('login', 'PenggunaController@login');
     Route::delete('login', 'PenggunaController@logout');
 
-    Route::group(['prefix'=>'pengguna',], function(){
+    Route::group(['prefix'=>'pengguna', 'middleware' => ['cek.user']], function(){
         Route::patch('/', 'PenggunaController@update');
         Route::post('/photo', 'PenggunaController@simpan_photo');
         Route::get('/photo', 'PenggunaController@photo');
     });
 
-    Route::prefix('pemesanan')->group(function(){
+    Route::prefix('pemesanan')->middlewareware(['cek.user'])->group(function(){
         Route::post('/','PemesananController@store');
         Route::patch('/{w}', 'PemesananController@update');
         Route::delete('/{w}', 'PemesananController@delete');
